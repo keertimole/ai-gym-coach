@@ -23,10 +23,11 @@ class VideoProcessorClass(VideoProcessorBase):
         self._exercise_type = "Squats"
 
         CURRENT_DIR = Path(__file__).resolve().parent
-APP_DIR = CURRENT_DIR.parent.parent.parent
-model_path = str(APP_DIR / "ml_models" / "pose_landmarker_full.task")
+        APP_DIR = CURRENT_DIR.parent.parent.parent
+        model_path = str(APP_DIR / "ml_models" / "pose_landmarker_full.task")
 
-base_option = python.BaseOptions(model_asset_path=model_path)
+        base_option = python.BaseOptions(model_asset_path=model_path)
+
         options = vision.PoseLandmarkerOptions(
             base_options=base_option,
             running_mode=vision.RunningMode.VIDEO,
@@ -35,7 +36,6 @@ base_option = python.BaseOptions(model_asset_path=model_path)
             min_tracking_confidence=0.7,
             output_segmentation_masks=False
         )
-
         self._landmarker = vision.PoseLandmarker.create_from_options(options)
 
         self._detectors = {
