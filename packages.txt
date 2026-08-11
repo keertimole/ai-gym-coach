@@ -1,2 +1,10 @@
 libgl1
 libglib2.0-0
+ffmpeg
+libavformat-dev
+libavcodec-dev
+libavdevice-dev
+libavutil-dev
+libswscale-dev
+libavfilter-dev
+libavresample-dev
