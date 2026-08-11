@@ -17,16 +17,21 @@ from services.config.workout_config import POSE_CONNECTIONS
 
 
 class VideoProcessorClass(VideoProcessorBase):
+
     def __init__(self):
         self._lock = threading.Lock()
         self._latest_metrics = None
         self._exercise_type = "Squats"
 
-        CURRENT_DIR = Path(__file__).resolve().parent
-        APP_DIR = CURRENT_DIR.parent.parent.parent
-        model_path = str(APP_DIR / "ml_models" / "pose_landmarker_full.task")
+        model_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+            "ml_models",
+            "pose_landmarker_full.task"
+        )
 
-        base_option = python.BaseOptions(model_asset_path=model_path)
+        base_option = python.BaseOptions(
+            model_asset_path=model_path
+        )
 
         options = vision.PoseLandmarkerOptions(
             base_options=base_option,
@@ -36,8 +41,8 @@ class VideoProcessorClass(VideoProcessorBase):
             min_tracking_confidence=0.7,
             output_segmentation_masks=False
         )
-        self._landmarker = vision.PoseLandmarker.create_from_options(options)
 
+        self._landmarker = vision.PoseLandmarker.create_from_options(options)
         self._detectors = {
             "Squats": SquatDetector(),
             "Push-ups": PushUpDetector(),
